@@ -1,0 +1,81 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Display inline</title>
+
+  <!-- ui css -->
+  <!--
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  -->
+  <link rel="stylesheet" type="text/css" href="untitled.css">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+
+  <!-- date & DatePicker js -->
+  <script src="http://2008.kelvinluck.com/assets/jquery/datePicker/v2/demo/scripts/jquery.datePicker.js"></script>
+  <script src="http://2008.kelvinluck.com/assets/jquery/datePicker/v2/demo/scripts/date.js"></script>
+
+<script>
+  var datelist = [];
+
+  $(function() {
+    $('.date-pick').datePicker ({
+          createButton:false,
+          displayClose:false,
+          closeOnSelect:true,
+          selectMultiple:true,
+          inline:true,
+          startDate:'01/01/2000'
+          // startDate:'01/01/2005',
+          // endDate:'31/12/2011'
+      })
+      .bind('dateSelected',function(e, selectedDate, $td, state){ //show selected
+        //console.log('You ' + (state ? '' : 'un') + 'selected ' + selectedDate);
+
+        if(state){
+          datelist.push(selectedDate.toString());
+        }else{
+          var index = datelist.indexOf(selectedDate.toString());
+          //console.log("Index:"+index);
+          if(index > -1){
+            datelist.splice(index, 1);
+          }
+        }
+      })
+  });
+
+  //init date 
+  $(function () {
+    var savelist = ["13/01/2017","14/01/2017","15/01/2017"];
+    for(var i=0; i<savelist.length; i++) {
+      $('.date-pick').dpSetSelected(savelist[i]);
+    }
+  })
+
+  $(function () {
+    $('#showlist').click(function () {
+      for(var i=0; i<datelist.length; i++) {
+
+        var date = datelist[i].substring(11,15) + datelist[i].substring(3,7) + datelist[i].substring(7,10);
+        console.log(date);
+        $('#listbox').append("<option>" + date + "</option>");
+      }
+    })
+  })
+</script>
+
+</head>
+<body>
+  <div class="date-pick">tste</div>
+
+  <button id="showlist"> show list</button>
+
+  <br>
+  <select id="listbox" multiple>
+  </select>
+
+</body>
+</html>
